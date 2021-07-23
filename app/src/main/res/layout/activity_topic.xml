@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".TopicActivity">
+
+
+        <ScrollView
+            android:id="@+id/topicScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/blue_gradient">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/rectangle_1"
+                    android:layout_width="190dp"
+                    android:layout_height="120dp"
+                    android:alpha="0.3"
+                    android:background="@drawable/shady_rectangle_topic"
+                    android:translationX="120dp"
+                    android:translationY="55dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/rectangle_2"
+                    android:layout_width="196dp"
+                    android:layout_height="153dp"
+                    android:alpha="0.3"
+                    android:background="@drawable/shady_rectangle_topic"
+                    android:translationX="150dp"
+                    android:translationY="-55dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/rectangle_3"
+                    android:layout_width="190dp"
+                    android:layout_height="120dp"
+                    android:alpha="0.3"
+                    android:background="@drawable/shady_rectangle_topic"
+                    android:translationX="-120dp"
+                    android:translationY="-50dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rectangle_4" />
+
+                <View
+                    android:id="@+id/rectangle_4"
+                    android:layout_width="190dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="236dp"
+                    android:alpha="0.3"
+                    android:background="@drawable/shady_rectangle_topic"
+                    android:translationX="-175dp"
+                    android:translationY="-15dp"
+                    app:layout_constraintEnd_toEndOf="@id/rectangle_3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/topicsToolbar"
+                    layout="@layout/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/topicsGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    app:layout_constraintEnd_toEndOf="@id/topicsToolbar"
+                    app:layout_constraintStart_toStartOf="@id/topicsToolbar"
+                    app:layout_constraintTop_toBottomOf="@id/topicsToolbar" />
+
+                <Button
+                    android:id="@+id/showResultButton"
+                    android:layout_width="223dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="120dp"
+                    android:text="@string/showResult"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    app:backgroundTint="@color/topicSelectedColor"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="@id/topicsGroup"
+                    app:layout_constraintStart_toStartOf="@id/topicsGroup"
+                    app:layout_constraintTop_toBottomOf="@id/topicsGroup" />
+
+                <Button
+                    android:id="@+id/resetButton"
+                    android:layout_width="50dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="150dp"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/white"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/showResultButton"
+                    app:layout_constraintEnd_toEndOf="@id/topicsToolbar"
+                    app:layout_constraintStart_toStartOf="@id/topicsToolbar"
+                    app:layout_constraintTop_toTopOf="@id/showResultButton" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+</layout>

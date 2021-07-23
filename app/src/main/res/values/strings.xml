@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MobcastTask1</string>
+    <string name="topicImage">Topic\'s Image</string>
+    <string name="showResult">Show Result</string>
+    <string name="selectTopics">Select Topics</string>
+</resources>
