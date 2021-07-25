@@ -13,4 +13,7 @@
     <color name="topicSelectedColor">#FBAAAA</color>
     <color name="topicTextColor">#474747</color>
     <color name="shadyRectangleColor">#AE9EEF</color>
+    <color name="discussionTextColor">#454545</color>
+    <color name="discussionDetailsColor">#909090</color>
+    <color name="discussionStatsTextColor">#454545</color>
 </resources>

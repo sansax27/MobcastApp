@@ -41,12 +41,12 @@
                     android:id="@+id/rectangle_3"
                     android:layout_width="190dp"
                     android:layout_height="120dp"
+                    android:layout_marginTop="319dp"
                     android:alpha="0.3"
                     android:background="@drawable/shady_rectangle_topic"
                     android:translationX="-120dp"
-                    android:translationY="-50dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rectangle_4" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/rectangle_4"
@@ -56,7 +56,6 @@
                     android:alpha="0.3"
                     android:background="@drawable/shady_rectangle_topic"
                     android:translationX="-175dp"
-                    android:translationY="-15dp"
                     app:layout_constraintEnd_toEndOf="@id/rectangle_3"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,9 +64,9 @@
                     layout="@layout/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -85,7 +84,7 @@
                     android:id="@+id/showResultButton"
                     android:layout_width="223dp"
                     android:layout_height="60dp"
-                    android:layout_marginTop="120dp"
+                    android:layout_marginTop="200dp"
                     android:text="@string/showResult"
                     android:textAllCaps="false"
                     android:textColor="@color/white"

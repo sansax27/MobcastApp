@@ -3,4 +3,9 @@
     <string name="topicImage">Topic\'s Image</string>
     <string name="showResult">Show Result</string>
     <string name="selectTopics">Select Topics</string>
+    <string name="latestDiscussion">Latest</string>
+    <string name="trendingDiscussion">Trending</string>
+    <string name="ourPost">Our Post</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
