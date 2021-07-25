@@ -1,3 +1,8 @@
 package com.mobcast.topic.models
 
-data class Topics(val topics:List<Topic>)
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+
+@JsonClass(generateAdapter = true)
+data class Topics(@Json(name = "BroadcastTags") val topics:List<Topic>?)

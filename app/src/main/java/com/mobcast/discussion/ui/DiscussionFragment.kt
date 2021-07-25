@@ -35,7 +35,7 @@ class DiscussionFragment @Inject constructor(private val discussionItemAdapter: 
             }
         }
         viewModel.discussionItemLiveData.observe(this) {
-            if (binding.discussionItemPB.visibility==View.VISIBLE) {
+            if (binding.discussionItemPB.visibility == View.VISIBLE && it!=null) {
                 binding.discussionItemPB.visibility = View.GONE
                 binding.discussionItemsRV.visibility = View.VISIBLE
             }

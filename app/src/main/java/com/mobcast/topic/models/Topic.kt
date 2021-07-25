@@ -1,3 +1,16 @@
 package com.mobcast.topic.models
 
-data class Topic(val tagId:Int, val tagName: String, val icon: Icon, val backgroundColor:String, val priority:Int, val tagDescription:String)
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+
+@JsonClass(generateAdapter = true)
+data class Topic(
+    @Json(name = "TagID") val tagId: Int?,
+    @Json(name = "ModuleID") val moduleId: Int?,
+    @Json(name = "TagName") val tagName: String?,
+    @Json(name = "IconID") val icon: Icon?,
+    @Json(name = "BackgroundColor") val backgroundColor: String?,
+    @Json(name = "Priority") val priority: Int?,
+    @Json(name = "TagDescription") val tagDescription: String?
+)

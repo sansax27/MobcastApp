@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DiscussionReplies(
-    @Json(name = "ReplyId")
+    @Json(name = "ReplyID")
     val replyId: Int?,
     @Json(name = "BroadcastID")
     val broadcastId: Int?,

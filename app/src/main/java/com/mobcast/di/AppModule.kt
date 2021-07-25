@@ -9,6 +9,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -26,12 +28,15 @@ object AppModule {
             MoshiConverterFactory.create(
                 Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
             )
-        ).baseUrl("https://run.mocky.io/v3/").build().create(APIService::class.java)
+        ).client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }).build())
+            .baseUrl("https://run.mocky.io/v3/").build().create(APIService::class.java)
     }
 
     @Singleton
     @Provides
-    fun providesCoroutineDispatcher():CoroutineDispatcher {
+    fun providesCoroutineDispatcher(): CoroutineDispatcher {
         return Dispatchers.IO
     }
 }

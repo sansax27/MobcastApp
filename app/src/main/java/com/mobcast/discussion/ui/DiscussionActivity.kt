@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DiscussionActivity : AppCompatActivity() {
 
-    private lateinit var _binding:ActivityDiscussionBinding
+    private lateinit var _binding: ActivityDiscussionBinding
     private val binding:ActivityDiscussionBinding get() = _binding
 
     inner class DiscussionViewPagerAdapter: FragmentStateAdapter(this) {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.mobcast.R
 import com.mobcast.databinding.DiscussionRecyclerViewItemBinding
 import com.mobcast.discussion.models.DiscussionItem

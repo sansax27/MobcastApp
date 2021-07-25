@@ -4,7 +4,7 @@
     <string name="showResult">Show Result</string>
     <string name="selectTopics">Select Topics</string>
     <string name="discussionForum">Discussion Forum</string>
-
+    <string name="networkError">Network Error!!</string>
 
     <string-array name="discussionSections">
         <item>Latest</item>

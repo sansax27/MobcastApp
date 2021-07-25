@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DiscussionItemData(
-    @Json(name = "FileId")
+    @Json(name = "FileID")
     val fileId: Int?,
     @Json(name = "Type")
     val type: String?,
