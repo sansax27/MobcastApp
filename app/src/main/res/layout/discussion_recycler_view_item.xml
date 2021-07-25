@@ -6,6 +6,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         app:cardCornerRadius="30dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,11 +25,10 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/discussionText"
+                android:id="@+id/discussionTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="TextView"
                 android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,12 +39,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="TextView"
                 android:textColor="@color/discussionDetailsColor"
                 android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="@id/discussionText"
-                app:layout_constraintStart_toStartOf="@id/discussionText"
-                app:layout_constraintTop_toBottomOf="@id/discussionText" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/discussionTitle" />
 
             <View
                 android:id="@+id/discussionLikesDrawable"
@@ -52,7 +51,7 @@
                 android:layout_height="17dp"
                 android:layout_marginTop="27dp"
                 android:background="@drawable/ic_heart"
-                app:layout_constraintStart_toStartOf="@id/discussionDetails"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/discussionDetails" />
 
             <TextView
@@ -88,7 +87,7 @@
                 app:layout_constraintTop_toTopOf="@id/discussionLikesDrawable" />
 
             <View
-                android:id="@+id/discussionCommentDrawable"
+                android:id="@+id/discussionReplyDrawable"
                 android:layout_width="17dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="40dp"
@@ -98,14 +97,14 @@
                 app:layout_constraintTop_toTopOf="@id/discussionLikesDrawable" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/discussionReplyCount"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:text="25"
                 android:textColor="@color/discussionStatsTextColor"
                 app:layout_constraintBottom_toBottomOf="@id/discussionLikesDrawable"
-                app:layout_constraintStart_toEndOf="@id/discussionCommentDrawable"
+                app:layout_constraintStart_toEndOf="@id/discussionReplyDrawable"
                 app:layout_constraintTop_toTopOf="@id/discussionLikesDrawable" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

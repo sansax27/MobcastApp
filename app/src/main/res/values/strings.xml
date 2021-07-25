@@ -1,11 +1,15 @@
 <resources>
-    <string name="app_name">MobcastTask1</string>
+    <string name="app_name">MobCast</string>
     <string name="topicImage">Topic\'s Image</string>
     <string name="showResult">Show Result</string>
     <string name="selectTopics">Select Topics</string>
-    <string name="latestDiscussion">Latest</string>
-    <string name="trendingDiscussion">Trending</string>
-    <string name="ourPost">Our Post</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="discussionForum">Discussion Forum</string>
+
+
+    <string-array name="discussionSections">
+        <item>Latest</item>
+        <item>Trending</item>
+        <item>Our Post</item>
+    </string-array>
+    <string name="discussionDetails">By : %s  - %s</string>
 </resources>
