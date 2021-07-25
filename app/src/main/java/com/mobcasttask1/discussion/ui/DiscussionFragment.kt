@@ -1,11 +1,15 @@
-package com.mobcasttask1
+package com.mobcasttask1.discussion.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mobcasttask1.R
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class DiscussionFragment : Fragment() {
 
 

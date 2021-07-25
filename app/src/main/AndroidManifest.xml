@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobcastTask1">
-        <activity android:name=".DiscussionActivity"></activity>
-        <activity android:name=".TopicActivity">
+        <activity android:name=".discussion.ui.DiscussionActivity"></activity>
+        <activity android:name=".topic.ui.TopicActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

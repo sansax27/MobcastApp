@@ -1,4 +1,4 @@
-package com.mobcasttask1
+package com.mobcasttask1.topic.ui
 
 import android.os.Bundle
 import android.widget.TextView
@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import com.mobcasttask1.R
 import com.mobcasttask1.databinding.ActivityTopicBinding
 import com.mobcasttask1.databinding.TopicItemBinding
+import com.mobcasttask1.topic.models.Icon
+import com.mobcasttask1.topic.models.Topic
 import kotlin.random.Random
 
 class TopicActivity : AppCompatActivity() {
@@ -44,7 +47,9 @@ class TopicActivity : AppCompatActivity() {
                             binding.resetButton.translationX = 0f
                             binding.showResultButton.translationX = 0f
                         }
-                        AppCompatResources.getDrawable( this@TopicActivity, R.drawable.circular_grey_background)
+                        AppCompatResources.getDrawable( this@TopicActivity,
+                            R.drawable.circular_grey_background
+                        )
                     } else {
                         addedTopics.add(l)
                         if (addedTopics.size==1 && !binding.resetButton.isVisible) {
@@ -52,7 +57,9 @@ class TopicActivity : AppCompatActivity() {
                             binding.resetButton.translationX = -translationXAmount
                             binding.showResultButton.translationX = translationXAmount
                         }
-                        AppCompatResources.getDrawable(this@TopicActivity, R.drawable.circular_accent_background)
+                        AppCompatResources.getDrawable(this@TopicActivity,
+                            R.drawable.circular_accent_background
+                        )
                     }
                     it.isSelected = !it.isSelected
                 }
