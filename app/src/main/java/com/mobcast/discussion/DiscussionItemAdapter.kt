@@ -59,10 +59,16 @@ class DiscussionItemAdapter @Inject constructor() :
             itemBinding.discussionTitle.text = data.description ?: ""
             data.sentDate?.let { date ->
                 data.by?.let { by ->
-                    originalDateFormat.parse(date)?.let {
-                        itemBinding.discussionDetails.text = itemView.context.getString(R.string.discussionDetails).format(by,targetDateFormat.format(it))
+                    try {
+                        itemBinding.discussionDetails.text = itemView.context.getString(R.string.discussionDetails).format(by,targetDateFormat.format(originalDateFormat.parse(date)!!))
+                    } catch (e:Exception) {
+                        itemBinding.discussionDetails.text = itemView.context.getString(R.string.discussionDetailsWithoutDate).format(by)
                     }
+
                 }
+            }
+            if (data.sentDate==null && data.by!=null) {
+                itemBinding.discussionDetails.text = itemView.context.getString(R.string.discussionDetailsWithoutDate).format(data.by)
             }
             data.likeCount?.let {
                 itemBinding.discussionLikes.text = it.toString()

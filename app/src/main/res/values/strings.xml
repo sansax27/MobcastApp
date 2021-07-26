@@ -12,4 +12,5 @@
         <item>Our Post</item>
     </string-array>
     <string name="discussionDetails">By : %s  - %s</string>
+    <string name="discussionDetailsWithoutDate">By : %s</string>
 </resources>
