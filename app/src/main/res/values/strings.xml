@@ -13,4 +13,13 @@
     </string-array>
     <string name="discussionDetails">By : %s  - %s</string>
     <string name="discussionDetailsWithoutDate">By : %s</string>
+    <string name="reply">Reply</string>
+    <string name="seeAllReplies">See all %s replies</string>
+    <string name="typeYourComments">Type Your Comments…</string>
+    <string name="commentMinAgo">%s min%s ago</string>
+    <string name="commentHoursAgo">%s hour%s ago</string>
+    <string name="commentDaysAgo">%s day%s ago</string>
+    <string name="commentMonthsAgo">%s month%s ago</string>
+    <string name="commentFewSecondsAgo">Few Seconds Ago</string>
+    <string name="noCommentsToShow">No Comments To Show</string>
 </resources>

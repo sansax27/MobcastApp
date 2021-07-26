@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/replyPersonImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/replyPersonName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="TextView"
+            android:textColor="@color/discussionStatsTextColor"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/replyTimeAgo"
+            app:layout_constraintStart_toEndOf="@id/replyPersonImage"
+            app:layout_constraintTop_toTopOf="@id/replyPersonImage" />
+
+        <TextView
+            android:id="@+id/replyTimeAgo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/topicTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/replyText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textColor="@color/discussionStatsTextColor"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/replyPersonName"
+            app:layout_constraintStart_toStartOf="@id/replyPersonName"
+            app:layout_constraintTop_toBottomOf="@id/replyPersonName" />
+
+        <TextView
+            android:id="@+id/replyLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+            android:layout_marginTop="15dp"
+            android:drawablePadding="10dp"
+            android:text="TextView"
+            android:textColor="@color/topicTextColor"
+            app:drawableStartCompat="@drawable/ic_heart"
+            app:layout_constraintStart_toStartOf="@id/replyText"
+            app:layout_constraintTop_toBottomOf="@id/replyDataImage" />
+
+        <TextView
+            android:id="@+id/reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="@string/reply"
+            android:textColor="@color/topicTextColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/replyLikeCount"
+            app:layout_constraintStart_toEndOf="@id/replyLikeCount"
+            app:layout_constraintTop_toTopOf="@id/replyLikeCount" />
+
+        <ImageView
+            android:id="@+id/replyDataImage"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/replyText"
+            app:layout_constraintTop_toBottomOf="@id/replyText"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <View
+            android:id="@+id/replyEndDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="25dp"
+            android:background="?android:attr/listDivider"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/replyLikeCount" />
+
+        <View
+            android:id="@+id/replyTreeUI"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/topicSelectedColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/repliesRV"
+            app:layout_constraintEnd_toEndOf="@id/replyPersonImage"
+            app:layout_constraintStart_toStartOf="@id/replyPersonImage"
+            app:layout_constraintTop_toTopOf="@id/repliesRV" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repliesRV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/replyPersonName"
+            app:layout_constraintTop_toBottomOf="@id/replyLikeCount" />
+
+        <TextView
+            android:id="@+id/seeAllReplies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/seeAllRepliesColor"
+            android:textSize="17sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/replyLikeCount"
+            app:layout_constraintTop_toBottomOf="@id/repliesRV" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

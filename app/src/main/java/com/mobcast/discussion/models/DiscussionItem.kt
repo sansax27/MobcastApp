@@ -39,7 +39,7 @@ data class DiscussionItem(
     @Json(name = "FileInfo")
     val fileData:List<DiscussionItemData>?,
     @Json(name = "Replies")
-    val replies:List<DiscussionReplies>?,
+    val replies:List<DiscussionReply>?,
     @Json(name = "ReplyCount")
     val replyCount:Int?
 )

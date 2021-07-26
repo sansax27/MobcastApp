@@ -2,10 +2,11 @@ package com.mobcast.discussion.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 
 @JsonClass(generateAdapter = true)
-data class DiscussionReplies(
+data class DiscussionReply(
     @Json(name = "ReplyID")
     val replyId: Int?,
     @Json(name = "BroadcastID")
@@ -29,5 +30,5 @@ data class DiscussionReplies(
     @Json(name = "FileInfo")
     val fileData:List<DiscussionItemData>?,
     @Json(name = "ChildReplies")
-    val childReplies:List<DiscussionReplies>?
-)
+    val childReplies:List<DiscussionReply>?
+) : Serializable

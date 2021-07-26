@@ -10,17 +10,17 @@ import coil.load
 import com.mobcast.R
 import com.mobcast.databinding.DiscussionRecyclerViewItemBinding
 import com.mobcast.discussion.models.DiscussionItem
+import com.mobcast.discussion.models.DiscussionReply
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class DiscussionItemAdapter @Inject constructor() :
+class DiscussionItemAdapter @Inject constructor(val move:(replies:List<DiscussionReply>?) -> Unit) :
     PagingDataAdapter<DiscussionItem, DiscussionItemAdapter.DiscussionViewHolder>(
         diffCallback
     ) {
 
-    private val originalDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-    private val targetDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+
 
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<DiscussionItem>() {
@@ -37,8 +37,9 @@ class DiscussionItemAdapter @Inject constructor() :
             ): Boolean {
                 return oldItem.unixTimeStamp == newItem.unixTimeStamp
             }
-
         }
+        private val originalDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        private val targetDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
     }
 
     inner class DiscussionViewHolder(private val itemBinding: DiscussionRecyclerViewItemBinding) :
@@ -56,7 +57,10 @@ class DiscussionItemAdapter @Inject constructor() :
                     }
                 }
             }
-            itemBinding.discussionTitle.text = data.description ?: ""
+            itemBinding.replyCount.setOnClickListener {
+                move(data.replies)
+            }
+            itemBinding.discussionTitle.text = data.title ?: ""
             data.sentDate?.let { date ->
                 data.by?.let { by ->
                     try {
@@ -71,10 +75,10 @@ class DiscussionItemAdapter @Inject constructor() :
                 itemBinding.discussionDetails.text = itemView.context.getString(R.string.discussionDetailsWithoutDate).format(data.by)
             }
             data.likeCount?.let {
-                itemBinding.discussionLikes.text = it.toString()
+                itemBinding.likesCount.text = it.toString()
             }
             data.replyCount?.let {
-                itemBinding.discussionReplyCount.text = it.toString()
+                itemBinding.replyCount.text = it.toString()
             }
             itemBinding.discussionDetails.apply {
                 if (text.isEmpty()) {
