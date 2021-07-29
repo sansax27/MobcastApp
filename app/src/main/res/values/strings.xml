@@ -22,4 +22,7 @@
     <string name="commentMonthsAgo">%s month%s ago</string>
     <string name="commentFewSecondsAgo">Few Seconds Ago</string>
     <string name="noCommentsToShow">No Comments To Show</string>
+    <string name="unableToPlayVideo">Unable To Play Video!!</string>
+    <string name="docName">%s.%s</string>
+    <string name="cantDownloadFile">Can\'t Download File</string>
 </resources>

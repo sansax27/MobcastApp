@@ -43,7 +43,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="TextView"
             android:textColor="@color/discussionStatsTextColor"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@id/replyPersonName"
@@ -59,8 +58,8 @@
             android:text="TextView"
             android:textColor="@color/topicTextColor"
             app:drawableStartCompat="@drawable/ic_heart"
-            app:layout_constraintStart_toStartOf="@id/replyText"
-            app:layout_constraintTop_toBottomOf="@id/replyDataImage" />
+            app:layout_constraintStart_toStartOf="@id/replyPersonName"
+            app:layout_constraintTop_toBottomOf="@id/dataBarrier" />
 
         <TextView
             android:id="@+id/reply"
@@ -74,15 +73,78 @@
             app:layout_constraintStart_toEndOf="@id/replyLikeCount"
             app:layout_constraintTop_toTopOf="@id/replyLikeCount" />
 
-        <ImageView
-            android:id="@+id/replyDataImage"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/replyDataImageCardView"
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/replyText"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/dataBarrier"
+            app:layout_constraintStart_toStartOf="@id/replyPersonName"
+            app:layout_constraintTop_toBottomOf="@id/replyText">
+
+            <ImageView
+                android:id="@+id/replyDataImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/playVideo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_arrow"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                app:backgroundTint="@null" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/dataBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:layout_constraintTop_toBottomOf="@id/replyDataImageCardView" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/docDataImageCardView"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@id/dataBarrier"
+            app:layout_constraintStart_toStartOf="@id/replyPersonName"
             app:layout_constraintTop_toBottomOf="@id/replyText"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintVertical_bias="0.0">
+
+            <ImageView
+                android:id="@+id/docDataImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/docDataName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="50dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/topicTextColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/dataBarrier"
+            app:layout_constraintEnd_toEndOf="@id/replyPersonName"
+            app:layout_constraintStart_toEndOf="@id/docDataImageCardView"
+            app:layout_constraintTop_toTopOf="@id/docDataImageCardView" />
 
         <View
             android:id="@+id/replyEndDivider"

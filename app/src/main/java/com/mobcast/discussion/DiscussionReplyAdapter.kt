@@ -1,8 +1,18 @@
 package com.mobcast.discussion
 
+import android.app.DownloadManager
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.os.Environment
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -11,12 +21,12 @@ import coil.load
 import com.mobcast.R
 import com.mobcast.databinding.CommentRecyclerViewItemBinding
 import com.mobcast.discussion.models.DiscussionReply
+import com.stfalcon.imageviewer.StfalconImageViewer
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-
-class DiscussionReplyAdapter constructor(private val topLevel:Boolean) :
+class DiscussionReplyAdapter constructor(private val topLevel: Boolean) :
     ListAdapter<DiscussionReply, DiscussionReplyAdapter.DiscussionReplyViewHolder>(
         diffCallback
     ) {
@@ -36,7 +46,6 @@ class DiscussionReplyAdapter constructor(private val topLevel:Boolean) :
                 return oldItem == newItem
             }
         }
-
         private val originalDateParser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
 
     }
@@ -48,7 +57,29 @@ class DiscussionReplyAdapter constructor(private val topLevel:Boolean) :
                 itemBinding.replyPersonImage.load(it)
             }
             itemBinding.replyPersonName.text = data.employeeName ?: "NA"
-            itemBinding.replyText.text = data.reply ?: "NA"
+            val taggingList = mutableListOf<Pair<Int,Int>>()
+            if (!data.reply.isNullOrEmpty()) {
+                val spannableString = SpannableString(data.reply)
+                var i=0
+                while (i<data.reply.length) {
+                    if (data.reply[i]=='@') {
+                        val start = i
+                        i++
+                        while (i<data.reply.length && (data.reply[i].isLetterOrDigit() || data.reply[i]=='_')) {
+                            i++
+                        }
+                        taggingList.add(Pair(start, i-1))
+                    } else {
+                        i++
+                    }
+                }
+                for (g in taggingList) {
+                    spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#DCABAB")), g.first, g.second+1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
+                }
+                itemBinding.replyText.text = spannableString
+            } else {
+                itemBinding.replyText.visibility = View.GONE
+            }
             data.likedCount?.let {
                 itemBinding.replyLikeCount.text = it.toString()
             }
@@ -86,9 +117,66 @@ class DiscussionReplyAdapter constructor(private val topLevel:Boolean) :
                     }
                 }
             }
+            if (!data.fileData.isNullOrEmpty()) {
+                val file = data.fileData[0]
+                if (file.type == "image" || file.type == "video") {
+                    file.thumbnailURL?.let {
+                        if (it.isNotEmpty()) {
+                            itemBinding.replyDataImage.load(it)
+                            itemBinding.replyDataImageCardView.visibility = View.VISIBLE
+                            if (file.type == "image") {
+                                if (!file.remoteURL.isNullOrEmpty()) {
+                                    itemBinding.replyDataImage.setOnClickListener {
+                                        StfalconImageViewer.Builder(
+                                            itemView.context,
+                                            arrayOf(file.remoteURL)
+                                        ) { view, imageURl ->
+                                            view.load(imageURl)
+                                        }.show()
+                                    }
+                                }
+                            } else {
+                                itemBinding.playVideo.visibility = View.VISIBLE
+                                if (!file.remoteURL.isNullOrEmpty()) {
+                                    itemBinding.playVideo.setOnClickListener {
+                                        itemView.context.startActivity(
+                                            Intent(
+                                                itemView.context,
+                                                VideoPlayActivity::class.java
+                                            ).apply {
+                                                putExtra("videoURL", file.remoteURL)
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    itemBinding.docDataName.text = itemView.context.getString(R.string.docName).format(file.name ?: "NA", file.type ?: "NA")
+                    itemBinding.docDataImageCardView.visibility = View.VISIBLE
+                    itemBinding.docDataName.visibility = View.VISIBLE
+                    if (!file.remoteURL.isNullOrEmpty()) {
+                        itemBinding.docDataName.setOnClickListener {
+                            try {
+                                val manager =
+                                    itemView.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                                val request = DownloadManager.Request(Uri.parse(file.remoteURL))
+                                request.setTitle(file.name ?: "NA")
+                                request.addRequestHeader("cookie",android.webkit.CookieManager.getInstance().getCookie(file.remoteURL))
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"MobCast")
+                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                                manager.enqueue(request)
+                            } catch (e: Exception) {
+                                Toast.makeText(itemView.context, itemView.context.getString(R.string.cantDownloadFile), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            }
             data.timestamp?.let {
                 originalDateParser.parse(it)?.let { date ->
-                    ((Date().time - date.time)/1000).apply {
+                    ((Date().time - date.time) / 1000).apply {
                         val months = this / 2628000
                         val days = this / 86400
                         val hours = this / 3600

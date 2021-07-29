@@ -30,6 +30,16 @@
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     tools:srcCompat="@tools:sample/avatars" />
+
+                <Button
+                    android:id="@+id/playVideoDiscussionButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_arrow"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
+                    app:backgroundTint="@null" />
             </androidx.cardview.widget.CardView>
 
 
