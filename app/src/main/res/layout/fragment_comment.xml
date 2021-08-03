@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".discussion.DiscussionReplyFragment">
+    tools:context=".discussion.ui.DiscussionFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/addReplyText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -63,8 +63,8 @@
                         android:hint="@string/typeYourComments"
                         android:inputType="textLongMessage"
                         android:minHeight="40dp"
-                        android:textColor="@color/commentTextColor"
-                        android:textColorHint="@color/commentTextColor"
+                        android:textColor="@color/discussionStatsTextColor"
+                        android:textColorHint="@color/commentHintTextColor"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toStartOf="@id/replyEmoji"
                         app:layout_constraintStart_toEndOf="@id/attachFile"

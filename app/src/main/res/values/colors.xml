@@ -16,6 +16,6 @@
     <color name="discussionDetailsColor">#909090</color>
     <color name="discussionStatsTextColor">#454545</color>
     <color name="seeAllRepliesColor">#DCABAB</color>
-    <color name="commentTextColor">#808080</color>
+    <color name="commentHintTextColor">#808080</color>
     <color name="addCommentColor">#EAA4A4</color>
 </resources>

@@ -8,7 +8,9 @@ import com.mobcast.data.utils.ResultState
 import com.mobcast.data.utils.UIState
 import com.mobcast.topic.models.Topics
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -24,6 +26,7 @@ class TopicViewModel @Inject constructor(private val topicRepository: TopicRepos
     }
 
     private fun getTopics() = viewModelScope.launch {
+        topicLoadStatusPrivate.postValue(UIState.Loading)
         when (val response = topicRepository.getTopics()) {
             is ResultState.GenericError -> topicLoadStatusPrivate.postValue(UIState.Failure(response.message))
             is ResultState.NetworkError -> topicLoadStatusPrivate.postValue(UIState.Failure("Network Error"))

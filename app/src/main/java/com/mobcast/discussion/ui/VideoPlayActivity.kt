@@ -1,4 +1,4 @@
-package com.mobcast.discussion
+package com.mobcast.discussion.ui
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import com.mobcast.R
 import com.mobcast.databinding.ActivityVideoPlayBinding
+import java.util.ArrayList
 
 class VideoPlayActivity : AppCompatActivity() {
     private val binding:ActivityVideoPlayBinding by lazy {

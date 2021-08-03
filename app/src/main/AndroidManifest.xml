@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".app.MobCastTaskApplication"
@@ -13,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobcastTask1">
-        <activity android:name=".discussion.VideoPlayActivity"></activity>
+        <activity android:name=".discussion.ui.VideoPlayActivity"/>
         <activity android:name=".discussion.ui.DiscussionActivity" />
         <activity android:name=".topic.ui.TopicActivity">
             <intent-filter>

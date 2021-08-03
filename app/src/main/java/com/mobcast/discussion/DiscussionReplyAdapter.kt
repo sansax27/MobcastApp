@@ -21,12 +21,16 @@ import coil.load
 import com.mobcast.R
 import com.mobcast.databinding.CommentRecyclerViewItemBinding
 import com.mobcast.discussion.models.DiscussionReply
+import com.mobcast.discussion.ui.VideoPlayActivity
 import com.stfalcon.imageviewer.StfalconImageViewer
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DiscussionReplyAdapter constructor(private val topLevel: Boolean) :
+class DiscussionReplyAdapter constructor(
+    private val topLevel: Boolean
+) :
     ListAdapter<DiscussionReply, DiscussionReplyAdapter.DiscussionReplyViewHolder>(
         diffCallback
     ) {
@@ -57,24 +61,23 @@ class DiscussionReplyAdapter constructor(private val topLevel: Boolean) :
                 itemBinding.replyPersonImage.load(it)
             }
             itemBinding.replyPersonName.text = data.employeeName ?: "NA"
-            val taggingList = mutableListOf<Pair<Int,Int>>()
             if (!data.reply.isNullOrEmpty()) {
                 val spannableString = SpannableString(data.reply)
-                var i=0
-                while (i<data.reply.length) {
-                    if (data.reply[i]=='@') {
+                var i = 0
+                while (i < data.reply.length) {
+                    if (data.reply[i] == '@') {
                         val start = i
                         i++
-                        while (i<data.reply.length && (data.reply[i].isLetterOrDigit() || data.reply[i]=='_')) {
+                        while (i < data.reply.length && (data.reply[i] != ' ' && data.reply[i] != '@')) {
                             i++
                         }
-                        taggingList.add(Pair(start, i-1))
+                        spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#DCABAB")),
+                        start,
+                        i,
+                        Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
                     } else {
                         i++
                     }
-                }
-                for (g in taggingList) {
-                    spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#DCABAB")), g.first, g.second+1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
                 }
                 itemBinding.replyText.text = spannableString
             } else {
@@ -153,7 +156,8 @@ class DiscussionReplyAdapter constructor(private val topLevel: Boolean) :
                         }
                     }
                 } else {
-                    itemBinding.docDataName.text = itemView.context.getString(R.string.docName).format(file.name ?: "NA", file.type ?: "NA")
+                    itemBinding.docDataName.text = itemView.context.getString(R.string.docName)
+                        .format(file.name ?: "NA", file.type ?: "NA")
                     itemBinding.docDataImageCardView.visibility = View.VISIBLE
                     itemBinding.docDataName.visibility = View.VISIBLE
                     if (!file.remoteURL.isNullOrEmpty()) {
@@ -163,12 +167,21 @@ class DiscussionReplyAdapter constructor(private val topLevel: Boolean) :
                                     itemView.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                                 val request = DownloadManager.Request(Uri.parse(file.remoteURL))
                                 request.setTitle(file.name ?: "NA")
-                                request.addRequestHeader("cookie",android.webkit.CookieManager.getInstance().getCookie(file.remoteURL))
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"MobCast")
+                                request.addRequestHeader(
+                                    "cookie",
+                                    android.webkit.CookieManager.getInstance()
+                                        .getCookie(file.remoteURL)
+                                )
+                                request.setDestinationInExternalFilesDir(itemView.context,Environment.DIRECTORY_DOCUMENTS, file.name ?: "NA")
                                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                                 manager.enqueue(request)
                             } catch (e: Exception) {
-                                Toast.makeText(itemView.context, itemView.context.getString(R.string.cantDownloadFile), Toast.LENGTH_SHORT).show()
+                                Timber.e(e)
+                                Toast.makeText(
+                                    itemView.context,
+                                    itemView.context.getString(R.string.cantDownloadFile),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }

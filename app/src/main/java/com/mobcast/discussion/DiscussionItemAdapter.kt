@@ -17,7 +17,9 @@ import com.mobcast.R
 import com.mobcast.databinding.DiscussionRecyclerViewItemBinding
 import com.mobcast.discussion.models.DiscussionItem
 import com.mobcast.discussion.models.DiscussionReply
+import com.mobcast.discussion.ui.VideoPlayActivity
 import com.stfalcon.imageviewer.StfalconImageViewer
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -98,6 +100,7 @@ class DiscussionItemAdapter @Inject constructor(val move:(replies:List<Discussio
                                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                                     manager.enqueue(request)
                                 } catch (e: Exception) {
+                                    Timber.e(e)
                                     Toast.makeText(itemView.context, itemView.context.getString(R.string.cantDownloadFile), Toast.LENGTH_SHORT).show()
                                 }
                             }

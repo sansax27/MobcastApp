@@ -11,13 +11,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobcast.R
+import com.mobcast.data.utils.ResultState
+import com.mobcast.data.utils.UIState
 import com.mobcast.databinding.FragmentDiscussionBinding
 import com.mobcast.discussion.DiscussionFragmentViewModel
 import com.mobcast.discussion.DiscussionItemAdapter
-import com.mobcast.discussion.DiscussionReplyFragment
 import com.mobcast.discussion.models.DiscussionReply
+import com.mobcast.discussion.models.Employee
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -28,15 +31,17 @@ class DiscussionFragment @Inject constructor() :
     private lateinit var _binding: FragmentDiscussionBinding
     private val binding: FragmentDiscussionBinding get() = _binding
     private val viewModel: DiscussionFragmentViewModel by viewModels()
+    private val employeesList = ArrayList<Employee>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = FragmentDiscussionBinding.inflate(layoutInflater)
         val discussionItemAdapter =  DiscussionItemAdapter{
             if (it.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), getString(R.string.noCommentsToShow), Toast.LENGTH_SHORT).show()
             } else {
-                DiscussionReplyFragment.newInstance(ArrayList<DiscussionReply>(it.size).apply { addAll(it) }).show(parentFragmentManager, "Replies")
+                DiscussionReplyFragment.newInstance(ArrayList<DiscussionReply>(it.size).apply { addAll(it) }, employeesList).show(parentFragmentManager, "Replies")
             }
         }
         binding.discussionItemsRV.apply {
@@ -54,7 +59,25 @@ class DiscussionFragment @Inject constructor() :
                 discussionItemAdapter.submitData(it)
             }
         }
-        super.onCreate(savedInstanceState)
+        viewModel.getEmployeesStatus.observe(this) {
+            when(it) {
+                is UIState.Success -> {
+                    it.data.employees?.let {
+                        employeesList.clear()
+                        employeesList.addAll(it)
+                    }
+                }
+                is UIState.Empty -> {}
+                is UIState.Loading -> {}
+                is UIState.Failure -> {
+                    if (it.message=="Network Error") {
+                        Toast.makeText(requireContext(), getString(R.string.networkError), Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateView(

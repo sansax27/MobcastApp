@@ -142,7 +142,7 @@
             android:textColor="@color/topicTextColor"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/dataBarrier"
-            app:layout_constraintEnd_toEndOf="@id/replyPersonName"
+            app:layout_constraintEnd_toEndOf="@id/replyTimeAgo"
             app:layout_constraintStart_toEndOf="@id/docDataImageCardView"
             app:layout_constraintTop_toTopOf="@id/docDataImageCardView" />
 
