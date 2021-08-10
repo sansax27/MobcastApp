@@ -1,4 +1,4 @@
-package com.mobcast.discussion.ui
+package com.application.newDiscussionForum.discussion.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -29,12 +29,12 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
     private val binding: FragmentCommentBinding get() = _binding
     private val discussionReplyAdapter = DiscussionReplyAdapter(true)
     private val adapterList = mutableListOf<Employee>()
-    private val taggedEmployeeMap = mutableMapOf<Int, Employee>()
+    private val taggedEmployeeMap = mutableMapOf<String, Employee>()
     private var beforeTextToStoreBefore = ""
     private var beforeTextToStoreAfter = ""
     private var afterTextToStoreBefore = ""
     private var afterTextToStoreAfter = ""
-    private var lastAtTheRateIndex = -1
+    private var adapterFilterSearchIndex = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,6 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
                         if (constraint == null || constraint.isEmpty()) {
                             filteredList.addAll(it)
                         } else {
-                            var start = -1
                             if (binding.addReplyText.selectionStart != -1) {
                                 val selectedText = binding.addReplyText.text.substring(
                                     0,
@@ -73,17 +72,18 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
                                     if (selectedText[selectedText.length - 1 - index] == ' ') {
                                         break
                                     } else if (selectedText[selectedText.length - 1 - index] == '@') {
-                                        start = selectedText.length - 1 - index
+                                        adapterFilterSearchIndex = selectedText.length - 1 - index
                                         break
                                     }
                                 }
-                                lastAtTheRateIndex = start
-                                if (start != -1) {
-                                    val searchPattern = if (start == selectedText.length - 1) {
-                                        ""
-                                    } else {
-                                        selectedText.substring(start + 1).lowercase().trim()
-                                    }
+                                if (adapterFilterSearchIndex != -1) {
+                                    val searchPattern =
+                                        if (adapterFilterSearchIndex == selectedText.length - 1) {
+                                            ""
+                                        } else {
+                                            selectedText.substring(adapterFilterSearchIndex + 1)
+                                                .lowercase().trim()
+                                        }
                                     for (employee in it) {
                                         employee.employeeName?.let { employeeName ->
                                             if (employeeName.lowercase().trim()
@@ -99,17 +99,18 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
                                     if (constraint[constraint.length - 1 - index] == ' ') {
                                         break
                                     } else if (constraint[constraint.length - 1 - index] == '@') {
-                                        start = constraint.length - 1 - index
+                                        adapterFilterSearchIndex = constraint.length - 1 - index
                                         break
                                     }
                                 }
-                                lastAtTheRateIndex = start
-                                if (start != -1) {
-                                    val searchPattern = if (start == constraint.length - 1) {
-                                        ""
-                                    } else {
-                                        constraint.substring(start + 1).lowercase().trim()
-                                    }
+                                if (adapterFilterSearchIndex != -1) {
+                                    val searchPattern =
+                                        if (adapterFilterSearchIndex == constraint.length - 1) {
+                                            ""
+                                        } else {
+                                            constraint.substring(adapterFilterSearchIndex + 1)
+                                                .lowercase().trim()
+                                        }
                                     for (employee in it) {
                                         employee.employeeName?.let { employeeName ->
                                             if (employeeName.lowercase().trim()
@@ -201,19 +202,67 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
                                     break
                                 }
                             }
-                            if (lastAtTheRateIndex != -1 && lastAtTheRateIndex != binding.addReplyText.text.length - 1 && binding.addReplyText.text[binding.addReplyText.text.length-1] !=' ') {
+                            val selectedTextForRemoval = binding.addReplyText.text.substring(
+                                0,
+                                binding.addReplyText.selectionStart
+                            )
+                            var start = -1
+                            for (index in selectedTextForRemoval.indices) {
+                                if (selectedTextForRemoval[selectedTextForRemoval.length - 1 - index] == ' ') {
+                                    break
+                                } else if (selectedTextForRemoval[selectedTextForRemoval.length - 1 - index] == '@') {
+                                    start = selectedTextForRemoval.length - 1 - index
+                                    break
+                                }
+                            }
+                            adapterFilterSearchIndex = start
+                            if (start != -1 && start != binding.addReplyText.text.length - 1) {
                                 val span = binding.addReplyText.text.getSpans(
-                                    lastAtTheRateIndex,
+                                    start,
                                     binding.addReplyText.selectionStart,
                                     ForegroundColorSpan::class.java
                                 )
                                 if (span.isNotEmpty()) {
-                                    binding.addReplyText.text.removeSpan(span[0])
-                                    binding.addReplyText.text.replace(
-                                        lastAtTheRateIndex,
-                                        binding.addReplyText.selectionStart, ""
-                                    )
-                                    taggedEmployeeMap.remove(span[0].hashCode())
+                                    if (((start != binding.addReplyText.selectionStart - 1) && taggedEmployeeMap[span[0].toString()]!!.employeeName!!.substring(
+                                            0,
+                                            taggedEmployeeMap[span[0].toString()]!!.employeeName!!.length - 1
+                                        ).replace(" ", "_") == binding.addReplyText.text.substring(
+                                            start + 1,
+                                            binding.addReplyText.selectionStart
+                                        )
+                                                )
+                                    ) {
+                                        binding.addReplyText.text.removeSpan(span[0])
+                                        binding.addReplyText.text.replace(
+                                            start,
+                                            binding.addReplyText.selectionStart, ""
+                                        )
+                                        taggedEmployeeMap.remove(span[0].toString())
+                                    } else if (start != binding.addReplyText.selectionStart - 1 && taggedEmployeeMap[span[0].toString()]!!.employeeName!!.substring(
+                                            0,
+                                            taggedEmployeeMap[span[0].toString()]!!.employeeName!!.length - 1
+                                        ).replace(
+                                            " ",
+                                            ""
+                                        ).startsWith(
+                                            binding.addReplyText.text.substring(
+                                                start + 1,
+                                                binding.addReplyText.selectionStart
+                                            ).replace("_", "")
+                                        )
+                                    ) {
+
+                                        binding.addReplyText.text.removeSpan(span[0])
+                                        binding.addReplyText.text.replace(
+                                            start,
+                                            start + taggedEmployeeMap[span[0].toString()]!!.employeeName!!.substring(
+                                                0,
+                                                taggedEmployeeMap[span[0].toString()]!!.employeeName!!.length - 1
+                                            ).length + 1,
+                                            ""
+                                        )
+                                        taggedEmployeeMap.remove(span[0].toString())
+                                    }
                                 }
                             }
                         } else {
@@ -226,14 +275,27 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
                     val employeeName =
                         (binding.addReplyText.adapter as ArrayAdapter<Employee>).getItem(position)!!.employeeName!!
                     val newSelectionIndex =
-                        "%s@%s".format(beforeTextToStoreBefore, employeeName).length+1
-                    binding.addReplyText.setText(
-                        "%s@%s %s".format(
-                            beforeTextToStoreBefore,
-                            employeeName.replace(" ", "_"),
-                            afterTextToStoreBefore
+                        "%s@%s".format(beforeTextToStoreBefore, employeeName).length + 1
+
+                    if(afterTextToStoreBefore.startsWith(' ')) {
+
+                        binding.addReplyText.setText(
+                            "%s@%s%s ".format(
+                                beforeTextToStoreBefore,
+                                employeeName.replace(" ", "_"),
+                                afterTextToStoreBefore
+                            )
                         )
-                    )
+                    } else {
+                        binding.addReplyText.setText(
+                            "%s@%s %s ".format(
+                                beforeTextToStoreBefore,
+                                employeeName.replace(" ", "_"),
+                                afterTextToStoreBefore
+                            )
+                        )
+                    }
+
 
                     var i = 0
                     val employeeList = taggedEmployeeMap.values.toList()
@@ -267,10 +329,11 @@ class DiscussionReplyFragment : BottomSheetDialogFragment() {
                                                 ForegroundColorSpan::class.java
                                             )[0]
                                             if (taggedEmployeeMap.size < existingSize) {
-                                                taggedEmployeeMap[span.hashCode()] =
+                                                taggedEmployeeMap[span.toString()] =
                                                     employeeList[taggedEmployeeMap.size]
                                             } else {
-                                                taggedEmployeeMap[span.hashCode()] =
+                                                Timber.e(span.toString())
+                                                taggedEmployeeMap[span.toString()] =
                                                     (binding.addReplyText.adapter as ArrayAdapter<Employee>).getItem(
                                                         position
                                                     )!!
